@@ -14,11 +14,6 @@
  * a little simpler to work with.
  */
 
-cellWidth = 101;
-cellHeight = 83;
-canvasWidth = 606;
-canvasHeight = 505;
-
 var Engine = (function(global) {
     /* Predefine the variables we'll be using within this scope,
      * create the canvas element, grab the 2D context for that canvas
@@ -31,8 +26,8 @@ var Engine = (function(global) {
         lastTime; 
 
 
-    canvas.width = 505;
-    canvas.height = 606;
+    canvas.width = map.width;
+    canvas.height = map.height;
     doc.body.appendChild(canvas);
 
     /* This function serves as the kickoff point for the game loop itself
@@ -121,8 +116,8 @@ var Engine = (function(global) {
                 'images/grass-block.png',   // Row 1 of 2 of grass
                 'images/grass-block.png'    // Row 2 of 2 of grass
             ],
-            numRows = 6,
-            numCols = 5,
+            numRows = map.maxY,
+            numCols = map.maxX,
             row, col;
 
         // player sprite overflows the grid sometimes and 
@@ -144,7 +139,7 @@ var Engine = (function(global) {
                  * so that we get the benefits of caching these images, since
                  * we're using them over and over.
                  */
-                ctx.drawImage(Resources.get(rowImages[row]), col * 101, row * 83);
+                ctx.drawImage(Resources.get(rowImages[row]), col * map.cellWidth, row * map.cellHeight);
             }
         }
 

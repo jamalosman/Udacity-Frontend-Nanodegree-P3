@@ -1,5 +1,17 @@
-// Enemies our player must avoid
+// Map fields, change to alter the game setup
+var map = {
+    "cellWidth" : 101,
+    "cellHeight" : 83,
+    "width" : 505,
+    "height" : 606,
+    "minX": 1,
+    "minY": 1,
+    "maxX": 5,
+    "maxY": 6
+}
 
+
+// Enemies our player must avoid
 
 var Enemy = function() {
     // Variables applied to each of our instances go here,
@@ -19,8 +31,8 @@ Enemy.prototype.resetPosition = function() {
     // means we need to decrement the coords before converting to
     // x and y values
     // [-1,-1] and [6,7] are outside the bounds of the grid
-    this.x = (this.pos[0]-1)*cellWidth;
-    this.y = (this.pos[1]-1)*cellHeight;
+    this.x = (this.pos[0]-1)*map.cellWidth;
+    this.y = (this.pos[1]-1)*map.cellHeight;
 
     //y is slightly off the grid, needs adjustment
     this.y -= 30;
@@ -31,8 +43,13 @@ Enemy.prototype.update = function(dt) {
     // You should multiply any movement by the dt parameter
     // which will ensure the game runs at the same speed for
     // all computers.
-    this.x += cellWidth*dt;
-    if (this.x > canvasWidth-cellWidth) {
+    
+    // smooth movement across the screen
+    this.x += map.cellWidth*dt;
+    
+    // Move the enemy back to the start when it reaches the
+    // end of the screen
+    if (this.x > map.width) {
         this.resetPosition();
     }
     this.render();
@@ -69,8 +86,8 @@ Player.prototype.setPosition = function() {
     // opted for 1-based coords instead of zero based, this
     // means we need to decrement the coords before converting to
     // x and y values
-    this.x = (this.pos[0]-1)*cellWidth;
-    this.y = (this.pos[1]-1)*cellHeight;
+    this.x = (this.pos[0]-1)*map.cellWidth;
+    this.y = (this.pos[1]-1)*map.cellHeight;
 
     //y is slightly off the grid, needs adjustment
     this.y -= 30;
@@ -79,19 +96,19 @@ Player.prototype.setPosition = function() {
 Player.prototype.handleInput = function(direction) {
     switch (direction) {
         case "left":
-            if (this.pos[0] > 1)
+            if (this.pos[0] > map.minX)
                 this.pos[0]--;
             break;
         case "up":
-            if (this.pos[1] > 1)
+            if (this.pos[1] > map.minY)
                 this.pos[1]--;
             break; 
         case "right":
-            if (this.pos[0] < 5)
+            if (this.pos[0] < map.maxX)
                 this.pos[0]++;
             break;
         case "down":
-            if (this.pos[1] < 6)
+            if (this.pos[1] < map.maxY)
                 this.pos[1]++;
             break;
     }

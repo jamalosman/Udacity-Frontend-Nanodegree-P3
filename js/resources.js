@@ -5,7 +5,10 @@
  * to load the same image multiple times.
  */
 
-
+cellWidth = 101;
+cellHeight = 83;
+canvasWidth = 606;
+canvasHeight = 505;
 
 (function() {
     var resourceCache = {};

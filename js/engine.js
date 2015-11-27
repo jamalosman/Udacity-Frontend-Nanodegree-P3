@@ -14,6 +14,11 @@
  * a little simpler to work with.
  */
 
+cellWidth = 101;
+cellHeight = 83;
+canvasWidth = 606;
+canvasHeight = 505;
+
 var Engine = (function(global) {
     /* Predefine the variables we'll be using within this scope,
      * create the canvas element, grab the 2D context for that canvas
@@ -23,7 +28,8 @@ var Engine = (function(global) {
         win = global.window,
         canvas = doc.createElement('canvas'),
         ctx = canvas.getContext('2d'),
-        lastTime;
+        lastTime; 
+
 
     canvas.width = 505;
     canvas.height = 606;
@@ -118,6 +124,12 @@ var Engine = (function(global) {
             numRows = 6,
             numCols = 5,
             row, col;
+
+        // player sprite overflows the grid sometimes and 
+        // leaves part of the head outside of the grid, this
+        // clears the whole canvas on each refreshs
+        ctx.fillStyle = "white"
+        ctx.fillRect(0,0,canvas.width,canvas.height)
 
         /* Loop through the number of rows and columns we've defined above
          * and, using the rowImages array, draw the correct image for that

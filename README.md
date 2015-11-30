@@ -1,6 +1,9 @@
 frontend-nanodegree-arcade-game
 ===============================
 
-Students should use this rubric: https://www.udacity.com/course/viewer#!/c-ud015/l-3072058665/m-3072588797
+To run the game, simply
+1. download the game
+2. open index.html (or use a local server no difference)
+3. play
 
-for self-checking their submission.
+I focused on abstraction in the project, there is a global object called map which, by changing its properties, you can change the size of the board (i.e. number of rows and columns). This required changing some parts of Engine.js

@@ -108,17 +108,16 @@ var Engine = (function(global) {
         /* This array holds the relative URL to the image used
          * for that particular row of the game level.
          */
-        var rowImages = [
-                'images/water-block.png',   // Top row is water
-                'images/stone-block.png',   // Row 1 of 3 of stone
-                'images/stone-block.png',   // Row 2 of 3 of stone
-                'images/stone-block.png',   // Row 3 of 3 of stone
-                'images/grass-block.png',   // Row 1 of 2 of grass
-                'images/grass-block.png'    // Row 2 of 2 of grass
-            ],
+        var rowImages = ['images/water-block.png'],   // Top row is water
             numRows = map.maxY,
             numCols = map.maxX,
             row, col;
+            for (var i = 0; i < map.maxY-3; i++) {
+                rowImages.push('images/stone-block.png');  // Row Images
+            };
+            rowImages.push('images/grass-block.png');   // Row 1 of 2 of grass
+            rowImages.push('images/grass-block.png');   // Row 2 of 2 of grass
+
 
         // player sprite overflows the grid sometimes and 
         // leaves part of the head outside of the grid, this
@@ -139,7 +138,9 @@ var Engine = (function(global) {
                  * so that we get the benefits of caching these images, since
                  * we're using them over and over.
                  */
-                ctx.drawImage(Resources.get(rowImages[row]), col * map.cellWidth, row * map.cellHeight);
+                ctx.drawImage(Resources.get(rowImages[row]),
+                    col * map.cellWidth,
+                    row * map.cellHeight);
             }
         }
 
@@ -155,11 +156,10 @@ var Engine = (function(global) {
         /* Loop through all of the objects within the allEnemies array and call
          * the render function you have defined.
          */
+        player.render();
         allEnemies.forEach(function(enemy) {
             enemy.render();
         });
-
-        player.render();
     }
 
     /* This function does nothing but it could have been a good place to

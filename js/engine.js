@@ -115,7 +115,7 @@ var Engine = (function(global) {
             row, col;
             for (var i = 0; i < map.maxY-3; i++) {
                 rowImages.push('images/stone-block.png');  // Row Images
-            };
+            }
             rowImages.push('images/grass-block.png');   // Row 1 of 2 of grass
             rowImages.push('images/grass-block.png');   // Row 2 of 2 of grass
 
@@ -123,8 +123,8 @@ var Engine = (function(global) {
         // player sprite overflows the grid sometimes and 
         // leaves part of the head outside of the grid, this
         // clears the whole canvas on each refreshs
-        ctx.fillStyle = "white"
-        ctx.fillRect(0,0,canvas.width,canvas.height)
+        ctx.fillStyle = "white";
+        ctx.fillRect(0,0,canvas.width,canvas.height);
 
         /* Loop through the number of rows and columns we've defined above
          * and, using the rowImages array, draw the correct image for that

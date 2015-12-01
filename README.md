@@ -6,4 +6,4 @@ To run the game, simply
 2. open index.html (or use a local server no difference)
 3. play
 
-I focused on abstraction in the project, there is a global object called map which, by changing its properties, you can change the size of the board (i.e. number of rows and columns). This required changing some parts of Engine.js
+I focused on abstraction in the project, there is a global object called map (near top of app.js) which, by changing its properties, you can change the size of the board (i.e. number of rows and columns). This required changing some parts of Engine.js

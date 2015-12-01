@@ -12,8 +12,8 @@ To run the game, simply
 3. play
 
 #Gameplay
-                                                        ▲
-Playing is simple, move around using the arrow keys, (◄ ▼ ►) to move around, avoiding the bugs,
+
+Playing is simple, move around using the arrow keys, (◄ ▲ ▼ ►) to move around, avoiding the bugs,
 
 the aim is to get to the other side, once your then you win!
 

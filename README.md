@@ -15,7 +15,11 @@ To run the game, simply
 
 Playing is simple, move around using the arrow keys, (◄ ▲ ▼ ►) to move around, avoiding the bugs,
 
-the aim is to get to the other side, once your then you win!
+the aim is to get to the other side, while avoiding the moving bugs
+
+If you come into contact with a bug you will be sent back to the start position
+
+once your at the other end, you win!
 
 
 

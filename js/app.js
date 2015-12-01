@@ -1,17 +1,17 @@
 // Map fields, change to alter the game setup
-var map = {
-    "cellWidth" : 101,
-    "cellHeight" : 83,
-    "minX": 1,
-    "minY": 1,
-    "maxX": 7,
-    "maxY": 7
+var MAP = {
+    'cellWidth' : 101,
+    'cellHeight' : 83,
+    'minX': 1,
+    'minY': 1,
+    'maxX': 7,
+    'maxY': 7
 };
 
-map.width = map.cellWidth*map.maxX;
-map.height = map.cellWidth*map.maxY;
-map.startX = Math.round(map.maxX/2);
-map.startY = map.maxY;
+MAP.width = MAP.cellWidth*MAP.maxX;
+MAP.height = MAP.cellWidth*MAP.maxY;
+MAP.startX = Math.round(MAP.maxX/2);
+MAP.startY = MAP.maxY;
 
 
 
@@ -20,6 +20,7 @@ map.startY = map.maxY;
 var Enemy = function(xStartPos,row,speed) {
     // Variables applied to each of our instances go here,
     // we've provided one for you to get started
+    this.xStartPos = xStartPos;
     this.pos = [xStartPos,row];
     this.resetPosition();
     this.pos[0] = 0;
@@ -37,12 +38,19 @@ Enemy.prototype.resetPosition = function() {
     // means we need to decrement the coords before converting to
     // x and y values
     // [-1,-1] and [6,7] are outside the bounds of the grid
-    this.x = (this.pos[0]-1)*map.cellWidth;
-    this.y = (this.pos[1]-1)*map.cellHeight;
+    this.x = (this.pos[0]-1)*MAP.cellWidth;
+    this.y = (this.pos[1]-1)*MAP.cellHeight;
 
     //y is slightly off the grid, needs adjustment
     this.y -= 30;
 };
+
+Enemy.prototype.restart = function(){
+    // this resets an enemy after a game is completed (win or lose)
+    this.pos[0] = this.xStartPos;
+    this.resetPosition();
+    this.pos[0] = 0;
+}
 // Update the enemy's position, required method for game
 // Parameter: dt, a time delta between ticks
 Enemy.prototype.update = function(dt) {
@@ -55,7 +63,7 @@ Enemy.prototype.update = function(dt) {
 
     // Move the enemy back to the start when it reaches the
     // end of the screen
-    if (this.x > map.width) {
+    if (this.x > MAP.width) {
         this.resetPosition();
     }
 
@@ -70,7 +78,7 @@ Enemy.prototype.update = function(dt) {
 Enemy.prototype.onCollision = function(){
     player.resetPosition();
     for (var i = 0; i < allEnemies.length; i++) {
-        allEnemies[i].resetPosition();
+        allEnemies[i].restart();
     }
 };
 
@@ -92,7 +100,7 @@ var Player = function() {
 Player.prototype.update = function(dt){
     this.handleInput();
     this.updatePosition();
-    if (this.pos[1] == map.minY){
+    if (this.pos[1] == MAP.minY){
         this.lock = true;
         this.resetPosition();
     }
@@ -103,46 +111,46 @@ Player.prototype.render = function() {
 };
 
 Player.prototype.updatePosition = function() {
-// updates player position based on player.pos
-this.setPosition(this.pos[0],this.pos[1]);
+    // updates player position based on player.pos
+    this.setPosition(this.pos[0],this.pos[1]);
 };
 
 Player.prototype.resetPosition = function(){
-// Sets the player to the starting position,
-this.pos = [map.startX,map.startY];
-this.setPosition(map.startX, map.startY);
+    // Sets the player to the starting position,
+    this.pos = [MAP.startX,MAP.startY];
+    this.setPosition(MAP.startX, MAP.startY);
 };
 
 Player.prototype.setPosition = function(xPos,yPos){
-// Converts co-ordinates from the pos array into xy coordinates
-// Note, as the player is in the center of the cell I've
-// opted for 1-based coords instead of zero based, this
-// means we need to decrement the coords before converting to
-// x and y values
-this.x = (xPos-1)*map.cellWidth;
-this.y = (yPos-1)*map.cellHeight;
+    // Converts co-ordinates from the pos array into xy coordinates
+    // Note, as the player is in the center of the cell I've
+    // opted for 1-based coords instead of zero based, this
+    // means we need to decrement the coords before converting to
+    // x and y values
+    this.x = (xPos-1)*MAP.cellWidth;
+    this.y = (yPos-1)*MAP.cellHeight;
 
-//y is slightly off the grid, needs adjustment
-this.y -= 30;
+    //y is slightly off the grid, needs adjustment
+    this.y -= 30;
 };
 
 Player.prototype.handleInput = function(direction) {
     if (!this.lock) {
         switch (direction) {
-            case "left":
-            if (this.pos[0] > map.minX)
+            case 'left':
+            if (this.pos[0] > MAP.minX)
                 this.pos[0]--;
             break;
-            case "up":
-            if (this.pos[1] > map.minY)
+            case 'up':
+            if (this.pos[1] > MAP.minY)
                 this.pos[1]--;
-            break; 
-            case "right":
-            if (this.pos[0] < map.maxX)
+            break;
+            case 'right':
+            if (this.pos[0] < MAP.maxX)
                 this.pos[0]++;
             break;
-            case "down":
-            if (this.pos[1] < map.maxY)
+            case 'down':
+            if (this.pos[1] < MAP.maxY)
                 this.pos[1]++;
             break;
         }
@@ -156,7 +164,7 @@ var Stars = function(){
 };
 
 Stars.prototype.update = function(dt){
-    if (player.lock && this.y < map.height){
+    if (player.lock && this.y < MAP.height){
         this.y += 3000*dt;
     } else if (player.lock) {
         this.y = -200;
@@ -165,8 +173,8 @@ Stars.prototype.update = function(dt){
 };
 
 Stars.prototype.render = function(){
-    for (var i = 0; i <= map.maxX; i++) {
-        ctx.drawImage(Resources.get(this.sprite), map.cellWidth*i, this.y);
+    for (var i = 0; i <= MAP.maxX; i++) {
+        ctx.drawImage(Resources.get(this.sprite), MAP.cellWidth*i, this.y);
     }
 };
 
@@ -176,13 +184,13 @@ Stars.prototype.render = function(){
 
 
 var allEnemies = [];
-for (var row = 2; row < map.maxY-1; row++) {
-    var xStartPos = Math.floor(Math.random() * map.maxX) + 1;
-    var speed = 100 + Math.floor(Math.random() * 200); 
+for (var row = 2; row < MAP.maxY-1; row++) {
+    var xStartPos = Math.floor(Math.random() * MAP.maxX) + 1;
+    var speed = 100 + Math.floor(Math.random() * 200);
     allEnemies.push(new Enemy(xStartPos,row,speed));
-    xStartPos += map.maxX/2;
-    if (xStartPos > map.maxX){
-        xStartPos -= map.maxX;
+    xStartPos += MAP.maxX/2;
+    if (xStartPos > MAP.maxX){
+        xStartPos -= MAP.maxX;
     }
     allEnemies.push(new Enemy(xStartPos,row,speed));
 }

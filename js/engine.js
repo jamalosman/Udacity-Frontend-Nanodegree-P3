@@ -23,11 +23,11 @@ var Engine = (function(global) {
         win = global.window,
         canvas = doc.createElement('canvas'),
         ctx = canvas.getContext('2d'),
-        lastTime; 
+        lastTime;
 
 
-    canvas.width = map.width;
-    canvas.height = map.height;
+    canvas.width = MAP.width;
+    canvas.height = MAP.height;
     doc.body.appendChild(canvas);
 
     /* This function serves as the kickoff point for the game loop itself
@@ -110,20 +110,20 @@ var Engine = (function(global) {
          * for that particular row of the game level.
          */
         var rowImages = ['images/water-block.png'],   // Top row is water
-            numRows = map.maxY,
-            numCols = map.maxX,
+            numRows = MAP.maxY,
+            numCols = MAP.maxX,
             row, col;
-            for (var i = 0; i < map.maxY-3; i++) {
+            for (var i = 0; i < MAP.maxY-3; i++) {
                 rowImages.push('images/stone-block.png');  // Row Images
             }
             rowImages.push('images/grass-block.png');   // Row 1 of 2 of grass
             rowImages.push('images/grass-block.png');   // Row 2 of 2 of grass
 
 
-        // player sprite overflows the grid sometimes and 
+        // player sprite overflows the grid sometimes and
         // leaves part of the head outside of the grid, this
         // clears the whole canvas on each refreshs
-        ctx.fillStyle = "white";
+        ctx.fillStyle = 'white';
         ctx.fillRect(0,0,canvas.width,canvas.height);
 
         /* Loop through the number of rows and columns we've defined above
@@ -140,8 +140,8 @@ var Engine = (function(global) {
                  * we're using them over and over.
                  */
                 ctx.drawImage(Resources.get(rowImages[row]),
-                    col * map.cellWidth,
-                    row * map.cellHeight);
+                    col * MAP.cellWidth,
+                    row * MAP.cellHeight);
             }
         }
 
